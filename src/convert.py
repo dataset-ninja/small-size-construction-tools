@@ -32,7 +32,7 @@ def download_dataset(teamfiles_dir: str) -> str:
             teamfiles_path = os.path.join(teamfiles_dir, file_name_with_ext)
 
             if not os.path.exists(get_file_name(local_path)):
-                with tqdm(desc=f"Downloading '{file_name_with_ext}' to buffer..", total=get_file_size(local_path)) as pbar:
+                with tqdm(desc=f"Downloading '{file_name_with_ext}' to buffer..", total=get_file_size(local_path), unit='B', unit_scale=True) as pbar:
                     api.file.download(team_id, teamfiles_path, local_path, progress_cb=pbar)
 
                 sly.logger.info(f"Start unpacking archive '{file_name_with_ext}'...")
@@ -86,7 +86,7 @@ def print_tree(root_path, indent=''):
         elif os.path.isdir(item_path):
             prefix = '`-- ' if is_last_item else '|-- '
             print(f"{indent}{prefix}{item}/")
-            print_tree(item_path, indent + ('    ' if is_last_item else '| 
+            print_tree(item_path, indent + ('    ' if is_last_item else '|   '))
 
 # project_name = "Detection of Small Size Construction Tools"
 teamfiles_dir = "/4import/original_format/detection-small-size-construction-tools/"
