@@ -37,7 +37,7 @@ def download_dataset(teamfiles_dir: str) -> str:
             if not os.path.exists(get_file_name(local_path)):
                 fsize = get_file_size(local_path)
                 with tqdm(
-                    desc=f"Downloading '{file_name_with_ext}' to buffer..",
+                    desc=f"Downloading '{file_name_with_ext}' to buffer {local_path}...",
                     total=fsize,
                     unit="B",
                     unit_scale=True,
@@ -53,6 +53,17 @@ def download_dataset(teamfiles_dir: str) -> str:
 
         dataset_path = storage_dir
     return dataset_path
+
+
+def count_jpg_files(folder_path):
+    count = 0
+
+    for root, _, files in os.walk(folder_path):
+        for file in files:
+            if file.lower().endswith(".jpg"):
+                count += 1
+
+    return count
 
 
 # https://zenodo.org/record/6530106
@@ -82,7 +93,9 @@ from supervisely.io.fs import (
 
 # project_name = "Detection of Small Size Construction Tools"
 teamfiles_dir = "/4import/original_format/detection-small-size-construction-tools/"
-dataset_path = download_dataset(teamfiles_dir)  # for large datasets stored on instance
+# dataset_path = download_dataset(teamfiles_dir)  # for large datasets stored on instance
+# dataset_path = os.path.join(sly.app.get_data_dir(), "ninja-repo-updater/649/")
+dataset_path = sly.app.get_data_dir()
 
 batch_size = 30
 images_ext = ".jpg"
@@ -170,7 +183,8 @@ def convert_and_upload_supervisely_project(
 
     dataset = api.dataset.create(project.id, ds_name, change_name_if_conflict=True)
 
-    progress = sly.Progress("Create dataset {}".format(ds_name), len(images_names))
+    jpg_count = count_jpg_files(dataset_path)
+    progress = sly.Progress("Create dataset {}".format(ds_name), len(jpg_count))
 
     for folderpath in [
         "DATA1/DATA1",
