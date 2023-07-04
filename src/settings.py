@@ -31,9 +31,9 @@ GITHUB_URL: str = "https://github.com/dataset-ninja/small-size-construction-tool
 ##################################
 DOWNLOAD_ORIGINAL_URL: Optional[Union[str, dict]] = {
     "DATA1.zip": "https://zenodo.org/record/6530106/files/DATA1.zip?download=1",
-    "DATA2.zip": "https://zenodo.org/record/6530106/files/DATA2.zip?download=1",
-    "DATA3.zip": "https://zenodo.org/record/6530106/files/DATA3.zip?download=1",
-    "DATA4.zip": "https://zenodo.org/record/6530106/files/DATA4.zip?download=1"
+    # "DATA2.zip": "https://zenodo.org/record/6530106/files/DATA2.zip?download=1",
+    # "DATA3.zip": "https://zenodo.org/record/6530106/files/DATA3.zip?download=1",
+    # "DATA4.zip": "https://zenodo.org/record/6530106/files/DATA4.zip?download=1"
 }
 # Optional link for downloading original dataset (e.g. "https://some.com/dataset/download")
 
