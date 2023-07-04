@@ -1,11 +1,13 @@
-import supervisely as sly
 import os
-from dataset_tools.convert import unpack_if_archive
-import src.settings as s
-from urllib.parse import unquote, urlparse
-from supervisely.io.fs import get_file_name
 import shutil
+from urllib.parse import unquote, urlparse
+
+import supervisely as sly
+from dataset_tools.convert import unpack_if_archive
+from supervisely.io.fs import get_file_name
 from tqdm import tqdm
+
+import src.settings as s
 
 
 def download_dataset(teamfiles_dir: str) -> str:
@@ -22,7 +24,8 @@ def download_dataset(teamfiles_dir: str) -> str:
         sly.logger.info(f"Start unpacking archive '{file_name_with_ext}'...")
         local_path = os.path.join(storage_dir, file_name_with_ext)
         teamfiles_path = os.path.join(teamfiles_dir, file_name_with_ext)
-        with tqdm(desc=f"Downloading '{file_name_with_ext}' to buffer..", total=get_file_size(local_path)) as pbar:
+        fsize = get_file_size(local_path)
+        with tqdm(desc=f"Downloading '{file_name_with_ext}' to buffer..", total=fsize) as pbar:
             api.file.download(team_id, teamfiles_path, local_path, progress_cb=pbar)
         dataset_path = unpack_if_archive(local_path)
 
@@ -32,12 +35,17 @@ def download_dataset(teamfiles_dir: str) -> str:
             teamfiles_path = os.path.join(teamfiles_dir, file_name_with_ext)
 
             if not os.path.exists(get_file_name(local_path)):
-                with tqdm(desc=f"Downloading '{file_name_with_ext}' to buffer..", total=get_file_size(local_path), unit='B', unit_scale=True) as pbar:
+                fsize = get_file_size(local_path)
+                with tqdm(
+                    desc=f"Downloading '{file_name_with_ext}' to buffer..",
+                    total=fsize,
+                    unit="B",
+                    unit_scale=True,
+                ) as pbar:
                     api.file.download(team_id, teamfiles_path, local_path, progress_cb=pbar)
 
                 sly.logger.info(f"Start unpacking archive '{file_name_with_ext}'...")
                 unpack_if_archive(local_path)
-
             else:
                 sly.logger.info(
                     f"Archive '{file_name_with_ext}' was already unpacked to '{os.path.join(storage_dir, get_file_name(file_name_with_ext))}'. Skipping..."
@@ -50,19 +58,19 @@ def download_dataset(teamfiles_dir: str) -> str:
 # https://zenodo.org/record/6530106
 
 import os
+import xml.etree.ElementTree as ET
+
 import numpy as np
 import supervisely as sly
-import xml.etree.ElementTree as ET
+from dotenv import load_dotenv
 from supervisely.io.fs import (
-    get_file_name_with_ext,
-    get_file_name,
-    get_file_ext,
-    file_exists,
     dir_exists,
+    file_exists,
+    get_file_ext,
+    get_file_name,
+    get_file_name_with_ext,
     get_file_size,
 )
-from dotenv import load_dotenv
-
 
 # if sly.is_development():
 # load_dotenv("local.env")
@@ -72,26 +80,10 @@ from dotenv import load_dotenv
 # team_id = sly.env.team_id()
 # workspace_id = sly.env.workspace_id()
 
-def print_tree(root_path, indent=''):
-    items = sorted(os.listdir(root_path))
-    num_items = len(items)
-    
-    for i, item in enumerate(items):
-        item_path = os.path.join(root_path, item)
-        is_last_item = i == num_items - 1
-        
-        if os.path.isfile(item_path):
-            prefix = '`-- ' if is_last_item else '|-- '
-            print(f"{indent}{prefix}{item}")
-        elif os.path.isdir(item_path):
-            prefix = '`-- ' if is_last_item else '|-- '
-            print(f"{indent}{prefix}{item}/")
-            print_tree(item_path, indent + ('    ' if is_last_item else '|   '))
-
 # project_name = "Detection of Small Size Construction Tools"
 teamfiles_dir = "/4import/original_format/detection-small-size-construction-tools/"
-dataset_path = download_dataset(teamfiles_dir) # for large datasets stored on instance
-print_tree(dataset_path)
+dataset_path = download_dataset(teamfiles_dir)  # for large datasets stored on instance
+
 batch_size = 30
 images_ext = ".jpg"
 bboxes_ext = ".txt"
@@ -106,7 +98,7 @@ def create_ann(image_path, meta):
     img_wight = image_np.shape[1]
 
     item_name = get_file_name(image_path) + bboxes_ext
-    bbox_path = os.path.join(dataset_path, item_name)
+    bbox_path = os.path.join(os.path.dirname(image_path), item_name)
 
     if file_exists(bbox_path):
         with open(bbox_path) as f:
@@ -148,10 +140,13 @@ obj_class_wrench = sly.ObjClass("wrench", sly.Rectangle)
 tag_train = sly.TagMeta("train", sly.TagValueType.NONE)
 tag_test = sly.TagMeta("test", sly.TagValueType.NONE)
 
+
 def convert_and_upload_supervisely_project(
     api: sly.Api, workspace_id: int, project_name: str
 ) -> sly.ProjectInfo:
     project = api.project.create(workspace_id, project_name, change_name_if_conflict=True)
+
+    print("###proj")
 
     meta = sly.ProjectMeta(
         obj_classes=[
@@ -175,23 +170,33 @@ def convert_and_upload_supervisely_project(
 
     dataset = api.dataset.create(project.id, ds_name, change_name_if_conflict=True)
 
-    images_names = [
-        im_name for im_name in os.listdir(dataset_path) if get_file_ext(im_name) == images_ext
-    ]
-
     progress = sly.Progress("Create dataset {}".format(ds_name), len(images_names))
 
-    for images_names_batch in sly.batched(images_names, batch_size=batch_size):
-        images_pathes_batch = [
-            os.path.join(dataset_path, image_name) for image_name in images_names_batch
+    for folderpath in [
+        "DATA1/DATA1",
+        "DATA2/DATA2",
+        "DATA3/DATA3",
+        "DATA4/DATA4",
+    ]:
+        curpath = os.path.join(dataset_path, folderpath)
+
+        print("###start", curpath)
+
+        images_names = [
+            im_name for im_name in os.listdir(curpath) if get_file_ext(im_name) == images_ext
         ]
 
-        img_infos = api.image.upload_paths(dataset.id, images_names_batch, images_pathes_batch)
-        img_ids = [im_info.id for im_info in img_infos]
+        for images_names_batch in sly.batched(images_names, batch_size=batch_size):
+            images_pathes_batch = [
+                os.path.join(curpath, image_name) for image_name in images_names_batch
+            ]
 
-        anns = [create_ann(image_path, meta) for image_path in images_pathes_batch]
-        api.annotation.upload_anns(img_ids, anns)
+            img_infos = api.image.upload_paths(dataset.id, images_names_batch, images_pathes_batch)
+            img_ids = [im_info.id for im_info in img_infos]
 
-        progress.iters_done_report(len(images_names_batch))
+            anns = [create_ann(image_path, meta) for image_path in images_pathes_batch]
+            api.annotation.upload_anns(img_ids, anns)
+
+            progress.iters_done_report(len(images_names_batch))
 
     return project
