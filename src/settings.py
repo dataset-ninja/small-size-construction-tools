@@ -5,8 +5,8 @@ from dataset_tools.templates import AnnotationType, CVTask, Industry, License
 ##################################
 # * Before uploading to instance #
 ##################################
-PROJECT_NAME: str = None
-PROJECT_NAME_FULL: str = None
+PROJECT_NAME: str = "Detection of Small Size Construction Tools"
+PROJECT_NAME_FULL: str = "Image Dataset for Object Detection of Small Size Construction Tools"
 
 ##################################
 # * After uploading to instance ##
@@ -23,13 +23,18 @@ HOMEPAGE_URL: str = None
 PREVIEW_IMAGE_ID: int = None
 # This should be filled AFTER uploading images to instance, just ID of any image.
 
-GITHUB_URL: str = None
+GITHUB_URL: str = "https://github.com/dataset-ninja/small-size-construction-tools"
 # URL to GitHub repo on dataset ninja (e.g. "https://github.com/dataset-ninja/some-dataset")
 
 ##################################
 ### * Optional after uploading ###
 ##################################
-DOWNLOAD_ORIGINAL_URL: Optional[Union[str, dict]] = None
+DOWNLOAD_ORIGINAL_URL: Optional[Union[str, dict]] = {
+    "DATA1.zip": "https://zenodo.org/record/6530106/files/DATA1.zip?download=1",
+    "DATA2.zip": "https://zenodo.org/record/6530106/files/DATA2.zip?download=1",
+    "DATA3.zip": "https://zenodo.org/record/6530106/files/DATA3.zip?download=1",
+    "DATA4.zip": "https://zenodo.org/record/6530106/files/DATA4.zip?download=1"
+}
 # Optional link for downloading original dataset (e.g. "https://some.com/dataset/download")
 
 CLASS2COLOR: Optional[Dict[str, List[str]]] = None
