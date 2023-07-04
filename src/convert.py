@@ -126,6 +126,10 @@ def create_ann(image_path, meta):
                         continue
                     if tag_name == "train1":
                         tag_name = "train"
+                    if tag_name.endswith("."):
+                        tag_name = tag_name.rstrip(".")
+                    if tag_name.endswith("1"):
+                        tag_name = tag_name.rstrip("1")
                     tag = sly.Tag(meta.get_tag_meta(tag_name))
                     obj_class = meta.get_obj_class(class_name)
                     left = int(curr_data[0])  # - int(curr_data[2]) / 4
@@ -194,6 +198,8 @@ def convert_and_upload_supervisely_project(
         "DATA2/DATA2",
     ]:
         curpath = os.path.join(dataset_path, folderpath)
+
+        print(folderpath)
 
         images_names = [
             im_name for im_name in os.listdir(curpath) if get_file_ext(im_name) == images_ext
