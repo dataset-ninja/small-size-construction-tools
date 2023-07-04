@@ -11,16 +11,16 @@ PROJECT_NAME_FULL: str = "Image Dataset for Object Detection of Small Size Const
 ##################################
 # * After uploading to instance ##
 ##################################
-LICENSE: License = None
-INDUSTRIES: List[Industry] = None
-CV_TASKS: List[CVTask] = None
-ANNOTATION_TYPES: List[AnnotationType] = None
+LICENSE: License = License.CC_BY_4_0()
+INDUSTRIES: List[Industry] = [Industry.Construction()]
+CV_TASKS: List[CVTask] = [CVTask.ObjectDetection()]
+ANNOTATION_TYPES: List[AnnotationType] = [AnnotationType.ObjectDetection()]
 
-RELEASE_YEAR: int = None
-HOMEPAGE_URL: str = None
+RELEASE_YEAR: int = 2023
+HOMEPAGE_URL: str = "https://zenodo.org/record/6530106"
 # e.g. "https://some.com/dataset/homepage"
 
-PREVIEW_IMAGE_ID: int = None
+PREVIEW_IMAGE_ID: int = 1463142
 # This should be filled AFTER uploading images to instance, just ID of any image.
 
 GITHUB_URL: str = "https://github.com/dataset-ninja/small-size-construction-tools"
@@ -31,19 +31,36 @@ GITHUB_URL: str = "https://github.com/dataset-ninja/small-size-construction-tool
 ##################################
 DOWNLOAD_ORIGINAL_URL: Optional[Union[str, dict]] = {
     "DATA1.zip": "https://zenodo.org/record/6530106/files/DATA1.zip?download=1",
-    # "DATA2.zip": "https://zenodo.org/record/6530106/files/DATA2.zip?download=1",
-    # "DATA3.zip": "https://zenodo.org/record/6530106/files/DATA3.zip?download=1",
-    # "DATA4.zip": "https://zenodo.org/record/6530106/files/DATA4.zip?download=1"
+    "DATA2.zip": "https://zenodo.org/record/6530106/files/DATA2.zip?download=1",
+    "DATA3.zip": "https://zenodo.org/record/6530106/files/DATA3.zip?download=1",
+    "DATA4.zip": "https://zenodo.org/record/6530106/files/DATA4.zip?download=1",
 }
 # Optional link for downloading original dataset (e.g. "https://some.com/dataset/download")
 
-CLASS2COLOR: Optional[Dict[str, List[str]]] = None
+CLASS2COLOR: Optional[Dict[str, List[str]]] = {
+    "bucket": [255, 0, 0],
+    "cutter": [0, 255, 0],
+    "drill": [0, 0, 255],
+    "grinder": [255, 255, 0],
+    "hammer": [0, 255, 255],
+    "knife": [255, 0, 255],
+    "saw": [255, 128, 0],
+    "shovel": [128, 0, 128],
+    "spanner": [255, 192, 203],
+    "tacker": [165, 42, 42],
+    "trowel": [155, 155, 155],
+    "wrench": [184, 234, 134],
+}
 # If specific colors for classes are needed, fill this dict (e.g. {"class1": [255, 0, 0], "class2": [0, 255, 0]})
 
-PAPER: Optional[str] = None
-CITATION_URL: Optional[str] = None
-ORGANIZATION_NAME: Optional[Union[str, List[str]]] = None
-ORGANIZATION_URL: Optional[Union[str, List[str]]] = None
+PAPER: Optional[str] = "https://link.springer.com/article/10.1007/s12205-023-1011-2"
+CITATION_URL: Optional[str] = "https://zenodo.org/record/6530106/export/hx"
+ORGANIZATION_NAME: Optional[Union[str, List[str]]] = [
+    "Korea Expressway Corporation and Inha University, Korea",
+]
+ORGANIZATION_URL: Optional[Union[str, List[str]]] = [
+    "https://link.springer.com/article/10.1007/s12205-023-1011-2#author-information",
+]
 TAGS: List[str] = None
 
 ##################################

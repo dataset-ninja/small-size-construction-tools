@@ -159,8 +159,6 @@ def convert_and_upload_supervisely_project(
 ) -> sly.ProjectInfo:
     project = api.project.create(workspace_id, project_name, change_name_if_conflict=True)
 
-    print("###proj")
-
     meta = sly.ProjectMeta(
         obj_classes=[
             obj_class_bucket,
@@ -184,7 +182,7 @@ def convert_and_upload_supervisely_project(
     dataset = api.dataset.create(project.id, ds_name, change_name_if_conflict=True)
 
     jpg_count = count_jpg_files(dataset_path)
-    progress = sly.Progress("Create dataset {}".format(ds_name), jpg_count)
+    progress = sly.Progress("Create dataset '{}'".format(ds_name), jpg_count)
 
     for folderpath in [
         "DATA1/DATA1",
@@ -193,8 +191,6 @@ def convert_and_upload_supervisely_project(
         "DATA4/DATA4",
     ]:
         curpath = os.path.join(dataset_path, folderpath)
-
-        print("###start", curpath)
 
         images_names = [
             im_name for im_name in os.listdir(curpath) if get_file_ext(im_name) == images_ext
