@@ -123,8 +123,7 @@ def create_ann(image_path, meta):
                     try:
                         class_name, tag_name = curr_data[4].split("_")
                     except:
-                        pass
-                    class_name, tag_name = curr_data[4].split("_")
+                        continue
                     if tag_name == "train1":
                         tag_name = "train"
                     tag = sly.Tag(meta.get_tag_meta(tag_name))
