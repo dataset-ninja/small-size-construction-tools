@@ -120,6 +120,10 @@ def create_ann(image_path, meta):
             for curr_data in content:
                 if len(curr_data) != 0:
                     curr_data = curr_data.split(",")
+                    try:
+                        class_name, tag_name = curr_data[4].split("_")
+                    except:
+                        pass
                     class_name, tag_name = curr_data[4].split("_")
                     if tag_name == "train1":
                         tag_name = "train"
