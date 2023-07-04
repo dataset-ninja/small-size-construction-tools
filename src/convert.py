@@ -189,10 +189,10 @@ def convert_and_upload_supervisely_project(
     progress = sly.Progress("Create dataset '{}'".format(ds_name), jpg_count)
 
     for folderpath in [
-        "DATA1/DATA1",
-        "DATA2/DATA2",
         "DATA3/DATA3",
         "DATA4/DATA4",
+        "DATA1/DATA1",
+        "DATA2/DATA2",
     ]:
         curpath = os.path.join(dataset_path, folderpath)
 
