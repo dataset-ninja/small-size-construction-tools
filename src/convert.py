@@ -5,6 +5,7 @@ import src.settings as s
 from urllib.parse import unquote, urlparse
 from supervisely.io.fs import get_file_name
 import shutil
+from tqdm import tqdm
 
 
 def download_dataset(teamfiles_dir: str) -> str:
@@ -21,8 +22,8 @@ def download_dataset(teamfiles_dir: str) -> str:
         sly.logger.info(f"Start unpacking archive '{file_name_with_ext}'...")
         local_path = os.path.join(storage_dir, file_name_with_ext)
         teamfiles_path = os.path.join(teamfiles_dir, file_name_with_ext)
-        api.file.download(team_id, teamfiles_path, local_path)
-
+        with tqdm(desc=f"Downloading '{file_name_with_ext}' to buffer..", total=get_file_size(local_path)) as pbar:
+            api.file.download(team_id, teamfiles_path, local_path, progress_cb=pbar)
         dataset_path = unpack_if_archive(local_path)
 
     if isinstance(s.DOWNLOAD_ORIGINAL_URL, dict):
@@ -31,7 +32,8 @@ def download_dataset(teamfiles_dir: str) -> str:
             teamfiles_path = os.path.join(teamfiles_dir, file_name_with_ext)
 
             if not os.path.exists(get_file_name(local_path)):
-                api.file.download(team_id, teamfiles_path, local_path)
+                with tqdm(desc=f"Downloading '{file_name_with_ext}' to buffer..", total=get_file_size(local_path)) as pbar:
+                    api.file.download(team_id, teamfiles_path, local_path, progress_cb=pbar)
 
                 sly.logger.info(f"Start unpacking archive '{file_name_with_ext}'...")
                 unpack_if_archive(local_path)
@@ -152,6 +154,7 @@ def convert_and_upload_supervisely_project(
         ],
         tag_metas=[tag_train, tag_test],
     )
+    
     api.project.update_meta(project.id, meta.to_json())
 
     dataset = api.dataset.create(project.id, ds_name, change_name_if_conflict=True)
@@ -174,3 +177,5 @@ def convert_and_upload_supervisely_project(
         api.annotation.upload_anns(img_ids, anns)
 
         progress.iters_done_report(len(images_names_batch))
+
+    return project
