@@ -72,10 +72,26 @@ from dotenv import load_dotenv
 # team_id = sly.env.team_id()
 # workspace_id = sly.env.workspace_id()
 
+def print_tree(root_path, indent=''):
+    items = sorted(os.listdir(root_path))
+    num_items = len(items)
+    
+    for i, item in enumerate(items):
+        item_path = os.path.join(root_path, item)
+        is_last_item = i == num_items - 1
+        
+        if os.path.isfile(item_path):
+            prefix = '`-- ' if is_last_item else '|-- '
+            print(f"{indent}{prefix}{item}")
+        elif os.path.isdir(item_path):
+            prefix = '`-- ' if is_last_item else '|-- '
+            print(f"{indent}{prefix}{item}/")
+            print_tree(item_path, indent + ('    ' if is_last_item else '| 
 
 # project_name = "Detection of Small Size Construction Tools"
 teamfiles_dir = "/4import/original_format/detection-small-size-construction-tools/"
 dataset_path = download_dataset(teamfiles_dir) # for large datasets stored on instance
+print_tree(dataset_path)
 batch_size = 30
 images_ext = ".jpg"
 bboxes_ext = ".txt"
@@ -154,7 +170,7 @@ def convert_and_upload_supervisely_project(
         ],
         tag_metas=[tag_train, tag_test],
     )
-    
+
     api.project.update_meta(project.id, meta.to_json())
 
     dataset = api.dataset.create(project.id, ds_name, change_name_if_conflict=True)
