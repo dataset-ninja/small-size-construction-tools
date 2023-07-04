@@ -12,7 +12,7 @@ PROJECT_NAME_FULL: str = "Image Dataset for Object Detection of Small Size Const
 # * After uploading to instance ##
 ##################################
 LICENSE: License = License.CC_BY_4_0()
-INDUSTRIES: List[Industry] = [Industry.Construction()]
+INDUSTRIES: List[Industry] = [Industry.Manufacturing()]  # Construction
 CV_TASKS: List[CVTask] = [CVTask.ObjectDetection()]
 ANNOTATION_TYPES: List[AnnotationType] = [AnnotationType.ObjectDetection()]
 
