@@ -93,9 +93,9 @@ from supervisely.io.fs import (
 
 # project_name = "Detection of Small Size Construction Tools"
 teamfiles_dir = "/4import/original_format/detection-small-size-construction-tools/"
-# dataset_path = download_dataset(teamfiles_dir)  # for large datasets stored on instance
+dataset_path = download_dataset(teamfiles_dir)  # for large datasets stored on instance
 # dataset_path = os.path.join(sly.app.get_data_dir(), "ninja-repo-updater/649/")
-dataset_path = sly.app.get_data_dir()
+# dataset_path = sly.app.get_data_dir()
 
 batch_size = 30
 images_ext = ".jpg"
