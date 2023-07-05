@@ -202,7 +202,9 @@ def convert_and_upload_supervisely_project(
         print(folderpath)
 
         images_names = [
-            im_name for im_name in os.listdir(curpath) if get_file_ext(im_name) == images_ext
+            im_name
+            for im_name in os.listdir(curpath)
+            if get_file_ext(im_name).lower() == images_ext
         ]
 
         for images_names_batch in sly.batched(images_names, batch_size=batch_size):
