@@ -3,11 +3,11 @@ import shutil
 from urllib.parse import unquote, urlparse
 
 import supervisely as sly
-from dataset_tools.convert import unpack_if_archive
 from supervisely.io.fs import get_file_name
 from tqdm import tqdm
 
 import src.settings as s
+from dataset_tools.convert import unpack_if_archive
 
 
 def download_dataset(teamfiles_dir: str) -> str:
@@ -85,7 +85,7 @@ from supervisely.io.fs import (
 )
 
 # if sly.is_development():
-# load_dotenv("local.env")
+load_dotenv("local.env")
 # load_dotenv(os.path.expanduser("~/supervisely.env"))
 
 # api = sly.Api.from_env()
