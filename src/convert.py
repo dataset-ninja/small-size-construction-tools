@@ -197,7 +197,7 @@ def convert_and_upload_supervisely_project(
 
         print(folderpath)
 
-        images_ext = ".JPG" if folderpath=='DATA4/DATA4' else '.jpg'
+        images_ext = ".JPG" if folderpath=="DATA4/DATA4" else '.jpg'
 
         images_names = [
             im_name
