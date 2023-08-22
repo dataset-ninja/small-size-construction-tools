@@ -211,9 +211,10 @@ def convert_and_upload_supervisely_project(
             if file_exists(bbox_path):
                 with open(bbox_path) as f:
                     content = f.read().split("\n")
-
+                    
+                    tmp = []
                     for curr_data in content:
-                        tmp = []
+                        
                         if len(curr_data) != 0:
                             curr_data = curr_data.split(",")
                             try:
@@ -232,7 +233,7 @@ def convert_and_upload_supervisely_project(
                     
                     tmp = list(set(tmp))
                     img_name = get_file_name(bbox_path) + images_ext
-                    
+
                     for ds_name in tmp:
                         splits.append((img_name, ds_name))
 
@@ -240,7 +241,6 @@ def convert_and_upload_supervisely_project(
         images_names_test = [split[0] for split in splits if split[1] == "test"]
 
         print(len(images_names_train), len(images_names_test))
-
         print("unique:", len(set(images_names_train)), len(set(images_names_test)))
 
         for item in [(dataset_train, images_names_train),(dataset_test, images_names_test)]:
