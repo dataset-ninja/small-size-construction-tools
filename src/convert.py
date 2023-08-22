@@ -94,9 +94,9 @@ load_dotenv("local.env")
 
 # project_name = "Detection of Small Size Construction Tools"
 teamfiles_dir = "/4import/original_format/detection-small-size-construction-tools/"
-dataset_path = download_dataset(teamfiles_dir)  # for large datasets stored on instance
+# dataset_path = download_dataset(teamfiles_dir)  # for large datasets stored on instance
 
-# dataset_path = sly.app.get_data_dir()
+dataset_path = sly.app.get_data_dir()
 
 batch_size = 50
 images_ext = ".jpg"
@@ -230,7 +230,7 @@ def convert_and_upload_supervisely_project(
 
                             img_name = get_file_name(bbox_path) + images_ext
 
-                            splits.append(img_name, ds_name)
+                            splits.append((img_name, ds_name))
 
         images_names_train = [split[0] for split in splits if split[1] == "train"]
         images_names_test = [split[0] for split in splits if split[1] == "test"]
