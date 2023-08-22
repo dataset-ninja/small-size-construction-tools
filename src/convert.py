@@ -237,6 +237,8 @@ def convert_and_upload_supervisely_project(
 
         print(len(images_names_train), len(images_names_test))
 
+        print("unique:", len(set(images_names_train)), len(set(images_names_test)))
+
         for item in [(dataset_train, images_names_train),(dataset_test, images_names_test)]:
             dataset, images_names = item
             for images_names_batch in sly.batched(images_names, batch_size=batch_size):
