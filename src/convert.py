@@ -232,8 +232,8 @@ def convert_and_upload_supervisely_project(
 
                             splits.append((img_name, ds_name))
 
-        images_names_train = [split[0] for split in splits if split[1] == "train"]
-        images_names_test = [split[0] for split in splits if split[1] == "test"]
+        images_names_train = [f"train_{split[0]}" for split in splits if split[1] == "train"]
+        images_names_test = [f"test_{split[0]}" for split in splits if split[1] == "test"]
 
         for dataset, images_names in zip(
             [dataset_train, dataset_test], [images_names_train, images_names_test]
