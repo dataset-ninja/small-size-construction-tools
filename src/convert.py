@@ -187,24 +187,27 @@ def convert_and_upload_supervisely_project(
     jpg_count = count_jpg_files(dataset_path)
     progress = sly.Progress("Create dataset", jpg_count)
 
-    for folderpath in [
+    for folder in [
         # "DATA1/DATA1",
         # "DATA2/DATA2",
         # "DATA3/DATA3",
         "DATA4/DATA4",
     ]:
-        curpath = os.path.join(dataset_path, folderpath)
+        curpath = os.path.join(dataset_path, folder)
 
-        print(folderpath)
+        print(folder)
 
-        images_ext = ".JPG" if folderpath=="DATA4/DATA4" else '.jpg'
+        images_ext = ".JPG" if folder=="DATA4/DATA4" else '.jpg'
 
         images_names = [
             im_name
             for im_name in os.listdir(curpath)
-            if get_file_ext(im_name) == images_ext
+            if get_file_ext(im_name) in images_ext
         ]
-        
+
+        print(os.listdir(curpath)[:5])
+        print(images_names[:5])
+
 
         ann_names = [get_file_name(im_name) + bboxes_ext for im_name in images_names]
         ann_paths = [os.path.join(curpath, name) for name in ann_names]
@@ -239,6 +242,8 @@ def convert_and_upload_supervisely_project(
 
                     for ds_name in tmp:
                         splits.append((img_name, ds_name))
+
+        print(splits[:5])
 
         images_names_train = [split[0] for split in splits if split[1] == "train"]
         images_names_test = [split[0] for split in splits if split[1] == "test"]
