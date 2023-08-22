@@ -236,7 +236,7 @@ def convert_and_upload_supervisely_project(
         images_names_test = [split[0] for split in splits if split[1] == "test"]
 
         for item in [(dataset_train, images_names_train),(dataset_test, images_names_test)]:
-            ds_name, dataset, images_names = item
+            dataset, images_names = item
             for images_names_batch in sly.batched(images_names, batch_size=batch_size):
                 images_pathes_batch = [
                     os.path.join(curpath, image_name) for image_name in images_names_batch
