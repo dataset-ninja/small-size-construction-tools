@@ -202,8 +202,9 @@ def convert_and_upload_supervisely_project(
         images_names = [
             im_name
             for im_name in os.listdir(curpath)
-            if get_file_ext(im_name).lower() == images_ext
+            if get_file_ext(im_name) == images_ext
         ]
+        
 
         ann_names = [get_file_name(im_name) + bboxes_ext for im_name in images_names]
         ann_paths = [os.path.join(curpath, name) for name in ann_names]
