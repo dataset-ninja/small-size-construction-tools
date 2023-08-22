@@ -243,8 +243,8 @@ def convert_and_upload_supervisely_project(
         images_names_test = [split[0] for split in splits if split[1] == "test"]
         images_names_undefined = [split[0] for split in splits if split[1] == "undefined"]
 
-        print(len(images_names_train), len(images_names_test))
-        print("unique:", len(set(images_names_train)), len(set(images_names_test)))
+        print(len(images_names_train), len(images_names_test),len(images_names_undefined))
+        print("unique:", len(set(images_names_train)), len(set(images_names_test)), len(set(images_names_undefined)))
 
         for item in [(dataset_train, images_names_train),(dataset_test, images_names_test),(dataset_undefined, images_names_undefined)]:
             dataset, images_names = item
