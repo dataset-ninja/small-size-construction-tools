@@ -213,6 +213,7 @@ def convert_and_upload_supervisely_project(
                     content = f.read().split("\n")
 
                     for curr_data in content:
+                        tmp = []
                         if len(curr_data) != 0:
                             curr_data = curr_data.split(",")
                             try:
@@ -227,10 +228,13 @@ def convert_and_upload_supervisely_project(
                                 ds_name = ds_name.rstrip("1")
                             if ds_name not in ["train", "test"]:
                                 sly.logger.warn(f"Anomaly ds_name in '{bbox_path}': {ds_name}")
-
-                            img_name = get_file_name(bbox_path) + images_ext
-
-                            splits.append((img_name, ds_name))
+                            tmp.append(ds_name)
+                    
+                    tmp = list(set(tmp))
+                    img_name = get_file_name(bbox_path) + images_ext
+                    
+                    for ds_name in tmp:
+                        splits.append((img_name, ds_name))
 
         images_names_train = [split[0] for split in splits if split[1] == "train"]
         images_names_test = [split[0] for split in splits if split[1] == "test"]
@@ -246,7 +250,7 @@ def convert_and_upload_supervisely_project(
                     os.path.join(curpath, image_name) for image_name in images_names_batch
                 ]
 
-                images_names_batch = [f"{dataset.name}_{name}" for name in images_names_batch]
+                # images_names_batch = [f"{dataset.name}_{name}" for name in images_names_batch]
                 img_infos = api.image.upload_paths(
                     dataset.id, images_names_batch, images_pathes_batch
                 )
