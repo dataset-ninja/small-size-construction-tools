@@ -235,12 +235,13 @@ def convert_and_upload_supervisely_project(
                                 ds_name = ds_name.rstrip("1")
                             if ds_name not in ["train", "test"]:
                                 sly.logger.warn(f"Anomaly ds_name in '{bbox_path}': {ds_name}")
+                            
+                            if ds_name in [None, ""]:
+                                ds_name = 'test'
                             tmp.append(ds_name)
                     
                     tmp = list(set(tmp))
                     img_name = get_file_name(bbox_path) + images_ext
-
-                    print(tmp) 
 
                     for ds_name in tmp:
                         splits.append((img_name, ds_name))
