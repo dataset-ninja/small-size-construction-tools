@@ -94,9 +94,9 @@ load_dotenv("local.env")
 
 # project_name = "Detection of Small Size Construction Tools"
 teamfiles_dir = "/4import/original_format/detection-small-size-construction-tools/"
-# dataset_path = download_dataset(teamfiles_dir)  # for large datasets stored on instance
+dataset_path = download_dataset(teamfiles_dir)  # for large datasets stored on instance
 
-dataset_path = sly.app.get_data_dir()
+# dataset_path = sly.app.get_data_dir()
 
 batch_size = 50
 images_ext = ".jpg"
