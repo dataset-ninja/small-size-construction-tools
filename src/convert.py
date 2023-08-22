@@ -240,6 +240,8 @@ def convert_and_upload_supervisely_project(
                     tmp = list(set(tmp))
                     img_name = get_file_name(bbox_path) + images_ext
 
+                    print(tmp) 
+
                     for ds_name in tmp:
                         splits.append((img_name, ds_name))
 
