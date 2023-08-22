@@ -236,8 +236,9 @@ def convert_and_upload_supervisely_project(
                             if ds_name not in ["train", "test"]:
                                 sly.logger.warn(f"Anomaly ds_name in '{bbox_path}': {ds_name}")
                             
-                            if ds_name in [None, ""]:
+                            if ds_name in [None, "", " "]:
                                 ds_name = 'test'
+                            print(type(ds_name))
                             tmp.append(ds_name)
                     
                     tmp = list(set(tmp))
