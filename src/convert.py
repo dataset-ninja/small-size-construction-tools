@@ -152,8 +152,6 @@ obj_class_tacker = sly.ObjClass("tacker", sly.Rectangle)
 obj_class_trowel = sly.ObjClass("trowel", sly.Rectangle)
 obj_class_wrench = sly.ObjClass("wrench", sly.Rectangle)
 
-# tag_train = sly.TagMeta("train", sly.TagValueType.NONE)
-# tag_test = sly.TagMeta("test", sly.TagValueType.NONE)
 
 
 def convert_and_upload_supervisely_project(
@@ -176,21 +174,21 @@ def convert_and_upload_supervisely_project(
             obj_class_trowel,
             obj_class_wrench,
         ],
-        # tag_metas=[tag_train, tag_test],
     )
 
     api.project.update_meta(project.id, meta.to_json())
 
     dataset_train = api.dataset.create(project.id, "train", change_name_if_conflict=True)
-    dataset_test = api.dataset.create(project.id, "test", change_name_if_conflict=True)
+    dataset_test = api.dataset.create(project.id, "test", change_name_if_conflict=True) 
+    dataset_undefined = api.dataset.create(project.id, "undefined", change_name_if_conflict=True)
 
     jpg_count = count_jpg_files(dataset_path)
     progress = sly.Progress("Create dataset", jpg_count)
 
     for folder in [
-        # "DATA1/DATA1",
-        # "DATA2/DATA2",
-        # "DATA3/DATA3",
+        "DATA1/DATA1",
+        "DATA2/DATA2",
+        "DATA3/DATA3",
         "DATA4/DATA4",
     ]:
         curpath = os.path.join(dataset_path, folder)
@@ -204,10 +202,6 @@ def convert_and_upload_supervisely_project(
             for im_name in os.listdir(curpath)
             if get_file_ext(im_name) in images_ext
         ]
-
-        print(os.listdir(curpath)[:5])
-        print(images_names[:5])
-
 
         ann_names = [get_file_name(im_name) + bboxes_ext for im_name in images_names]
         ann_paths = [os.path.join(curpath, name) for name in ann_names]
@@ -226,14 +220,14 @@ def convert_and_upload_supervisely_project(
                             try:
                                 _, ds_name = curr_data[4].split("_")
                             except:
-                                ds_name = 'test'
+                                ds_name = 'undefined'
                             if ds_name == "train1":
                                 ds_name = "train"
                             if ds_name.endswith("."):
                                 ds_name = ds_name.rstrip(".")
                             if ds_name.endswith("1"):
                                 ds_name = ds_name.rstrip("1")
-                            if ds_name not in ["train", "test"]:
+                            if ds_name not in ["train", "test",'undefined']:
                                 sly.logger.warn(f"Anomaly ds_name in '{bbox_path}': {ds_name}")
                             
                             tmp.append(ds_name)
@@ -244,15 +238,15 @@ def convert_and_upload_supervisely_project(
                     for ds_name in tmp:
                         splits.append((img_name, ds_name))
 
-        print(splits[:5])
 
         images_names_train = [split[0] for split in splits if split[1] == "train"]
         images_names_test = [split[0] for split in splits if split[1] == "test"]
+        images_names_undefined = [split[0] for split in splits if split[1] == "undefined"]
 
         print(len(images_names_train), len(images_names_test))
         print("unique:", len(set(images_names_train)), len(set(images_names_test)))
 
-        for item in [(dataset_train, images_names_train),(dataset_test, images_names_test)]:
+        for item in [(dataset_train, images_names_train),(dataset_test, images_names_test),(dataset_undefined, images_names_undefined)]:
             dataset, images_names = item
             for images_names_batch in sly.batched(images_names, batch_size=batch_size):
                 images_pathes_batch = [
