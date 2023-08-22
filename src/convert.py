@@ -244,7 +244,7 @@ def convert_and_upload_supervisely_project(
                     os.path.join(curpath, image_name) for image_name in images_names_batch
                 ]
 
-                # images_names_batch = [f"{ds_name}_{name}" for name in images_names_batch]
+                images_names_batch = [f"{dataset.name}_{name}" for name in images_names_batch]
                 img_infos = api.image.upload_paths(
                     dataset.id, images_names_batch, images_pathes_batch
                 )
