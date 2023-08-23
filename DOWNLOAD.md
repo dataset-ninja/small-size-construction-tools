@@ -1,6 +1,6 @@
-Dataset **Detection of Small Size Construction Tools** can be downloaded in Supervisely format:
+Dataset **Detection of Small Size Construction Tools** can be downloaded in [Supervisely format](https://developer.supervisely.com/api-references/supervisely-annotation-json-format):
 
- [Download](https://assets.supervisely.com/supervisely-supervisely-assets-public/teams_storage/r/r/YS/Ia4g4Qb9nzKuBlGlCkwlnounKEshGZ6iskT1rLOomTMDDcVoqsKkZXVUFlocIrB88ZJV7UkiJ5ScGXRRj0KGTvTsP8T0WkXA2ka6xXj4J8lX33wQcXv0nWDhZH0W.tar)
+ [Download](https://assets.supervisely.com/supervisely-supervisely-assets-public/teams_storage/D/w/Vc/clrcyeLaxLLTyoKtsGDn1iQYjXWOMcqkjP5ve4Um7vvSFE7d8rIP8LN3xq5SXJpCverrH8hc8ZJLD7I1HczTVa0CeaAhMPs5aQsk7CcAWwqjSmm0SNHzLKPVWZTj.tar)
 
 As an alternative, it can be downloaded with *dataset-tools* package:
 ``` bash
@@ -11,11 +11,13 @@ pip install --upgrade dataset-tools
 ``` python
 import dataset_tools as dtools
 
-dtools.download(dataset='Detection of Small Size Construction Tools', dst_path='~/dtools/datasets/Detection of Small Size Construction Tools.tar')
+dtools.download(dataset='Detection of Small Size Construction Tools', dst_dir='~/dataset-ninja/')
 ```
+Make sure not to overlook the [python code example](https://developer.supervisely.com/getting-started/python-sdk-tutorials/iterate-over-a-local-project) available on the Supervisely Developer Portal. It will give you a clear idea of how to effortlessly work with the downloaded dataset.
+
 The data in original format can be downloaded here:
 
-- 🔗[DATA1.zip](https://zenodo.org/record/6530106/files/DATA1.zip?download=1)
-- 🔗[DATA2.zip](https://zenodo.org/record/6530106/files/DATA2.zip?download=1)
-- 🔗[DATA3.zip](https://zenodo.org/record/6530106/files/DATA3.zip?download=1)
-- 🔗[DATA4.zip](https://zenodo.org/record/6530106/files/DATA4.zip?download=1)
+- [DATA1.zip](https://zenodo.org/record/6530106/files/DATA1.zip?download=1)
+- [DATA2.zip](https://zenodo.org/record/6530106/files/DATA2.zip?download=1)
+- [DATA3.zip](https://zenodo.org/record/6530106/files/DATA3.zip?download=1)
+- [DATA4.zip](https://zenodo.org/record/6530106/files/DATA4.zip?download=1)
