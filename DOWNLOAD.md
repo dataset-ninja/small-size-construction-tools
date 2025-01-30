@@ -1,6 +1,6 @@
 Dataset **Detection of Small Size Construction Tools** can be downloaded in [Supervisely format](https://developer.supervisely.com/api-references/supervisely-annotation-json-format):
 
- [Download](https://www.dropbox.com/scl/fi/go6du9u4ct0z7mwudvdpd/detection-of-small-size-construction-tools-DatasetNinja.tar?rlkey=hsanam65eluz4jkbpncthvmca&dl=1)
+ [Download](https://assets.supervisely.com/remote/eyJsaW5rIjogImZzOi8vYXNzZXRzLzE2NDBfRGV0ZWN0aW9uIG9mIFNtYWxsIFNpemUgQ29uc3RydWN0aW9uIFRvb2xzL2RldGVjdGlvbi1vZi1zbWFsbC1zaXplLWNvbnN0cnVjdGlvbi10b29scy1EYXRhc2V0TmluamEudGFyIiwgInNpZyI6ICJWall4OVpYcFdhVEJrb2xwTG8rNzIwNFdGT2RlRFZscGt5ZHJ5T2p3LzhzPSJ9)
 
 As an alternative, it can be downloaded with *dataset-tools* package:
 ``` bash
