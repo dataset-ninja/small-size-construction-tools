@@ -1,6 +1,6 @@
 Dataset **Detection of Small Size Construction Tools** can be downloaded in [Supervisely format](https://developer.supervisely.com/api-references/supervisely-annotation-json-format):
 
- [Download](https://assets.supervisely.com/remote/eyJsaW5rIjogImZzOi8vYXNzZXRzLzE2NDBfRGV0ZWN0aW9uIG9mIFNtYWxsIFNpemUgQ29uc3RydWN0aW9uIFRvb2xzL2RldGVjdGlvbi1vZi1zbWFsbC1zaXplLWNvbnN0cnVjdGlvbi10b29scy1EYXRhc2V0TmluamEudGFyIiwgInNpZyI6ICJWall4OVpYcFdhVEJrb2xwTG8rNzIwNFdGT2RlRFZscGt5ZHJ5T2p3LzhzPSJ9)
+ [Download](https://assets.supervisely.com/remote/eyJsaW5rIjogInMzOi8vc3VwZXJ2aXNlbHktZGF0YXNldHMvMTY0MF9EZXRlY3Rpb24gb2YgU21hbGwgU2l6ZSBDb25zdHJ1Y3Rpb24gVG9vbHMvZGV0ZWN0aW9uLW9mLXNtYWxsLXNpemUtY29uc3RydWN0aW9uLXRvb2xzLURhdGFzZXROaW5qYS50YXIiLCAic2lnIjogImtTL1EvTEYvZ28vM3VuRzVUV2g4VXpSalBFYSttTVVXZTNjSmpsWE1xSDA9In0=?response-content-disposition=attachment%3B%20filename%3D%22detection-of-small-size-construction-tools-DatasetNinja.tar%22)
 
 As an alternative, it can be downloaded with *dataset-tools* package:
 ``` bash
